@@ -49,10 +49,7 @@ model = mix.GaussianMixture(n_components=4,
                             random_state = 711).fit(X)
 hidden_states = model.predict(X)
 
-# Displaying the parameters of the 2 fitted states.
-# Note first state is our normal volatility regime whilst the second is
-# the stressed markets regime, with distinctly higher volatility 
-# and negative average log-return.
+# Displaying the parameters of the fitted states.
 print("Mean and variance of each hidden state:")
 for i in range(model.n_components):
     print("{0}th hidden state:".format(i+1))
