@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
+import itertools
 from datetime import datetime
 import numpy as np
 import sklearn.mixture as mix
@@ -39,9 +40,49 @@ log_series = time_series.copy(deep="True")
 log_series[log_series.columns] = np.log(log_series[log_series.columns]) - np.log(log_series[log_series.columns].shift(1))
 log_series = log_series.dropna()
 
+# To determine the appropriate covariance type & number of components our Gaussian Mixture Model
+# must feature we can use the information-theoretic criteria and rank the accuracy of different fits 
+# to our data:
+lowest_bic = np.infty
+bic = []
+n_components_range = range(1, 10)
+cv_types = ['spherical', 'tied', 'diag', 'full']
+for cv_type in cv_types:
+    for n_components in n_components_range:
+        model = mix.GaussianMixture(n_components=n_components,
+                                      covariance_type=cv_type)
+        model.fit(X)
+        bic.append(model.bic(X))
+        if bic[-1] < lowest_bic:
+            lowest_bic = bic[-1]
+            best_ = model
+
+bic = np.array(bic)
+color_iter = itertools.cycle(['navy', 'turquoise', 'cornflowerblue',
+                              'darkorange'])
+clf = best_
+bars = []
+
+# Plotting the BIC scores
+plt.figure(figsize=(8, 6))
+spl = plt.subplot(2, 1, 1)
+for i, (cv_type, color) in enumerate(zip(cv_types, color_iter)):
+    xpos = np.array(n_components_range) + .2 * (i - 2)
+    bars.append(plt.bar(xpos, bic[i * len(n_components_range):
+                                  (i + 1) * len(n_components_range)],
+                        width=.2, color=color))
+plt.xticks(n_components_range)
+plt.ylim([bic.min() * 1.01 - .01 * bic.max(), bic.max()])
+plt.title('BIC score per model')
+xpos = np.mod(bic.argmin(), len(n_components_range)) + .65 +\
+    .2 * np.floor(bic.argmin() / len(n_components_range))
+plt.text(xpos, bic.min() * 0.97 + .03 * bic.max(), '*', fontsize=14)
+spl.set_xlabel('Number of components')
+spl.legend([b[0] for b in bars], cv_types)
+
 # Fitting the hidden markov model to the data.
-# Here I set the number of components to 2, in order
-# to account for normal and high volatility regimes.
+# Here I set the number of components to 4 and covariance type to full, 
+# as these parameters gave the best BIC score.
 X = log_series[log_series.columns].values
 model = mix.GaussianMixture(n_components=2,
                             covariance_type='full',
