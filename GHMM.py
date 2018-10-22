@@ -18,7 +18,7 @@ paths = ["/Users/julienraffaud/Desktop/Data/DEXJPUS.csv",
          "/Users/julienraffaud/Desktop/Data/NIKKEI225.csv"]
 
 # Importing, collating and formatting our three time series:
-# USD/JPY, 10Y constant maturity JGB yield & Nikkei index
+# USD/JPY, 10Y constant maturity JGB yield & Nikkei index.
 dataframes = []
 for file in paths:
     df = pd.read_csv(file)
@@ -29,12 +29,12 @@ for file in paths:
     df = df.set_index("DATE")
     dataframes.append(df)
 
-# Formatting the final dataframe of the time series
+# Formatting the final dataframe of the time series.
 time_series = pd.concat(dataframes,axis=1,sort='False').dropna() 
 time_series.columns = ["USD/JPY","JGB","NIKKEI"]
 time_series.index = pd.to_datetime(time_series.index)
 
-# Making a dataframe of the time series' log-returns
+# Making a dataframe of the time series' log-returns.
 log_series = time_series.copy(deep="True")
 log_series[log_series.columns] = np.log(log_series[log_series.columns]) - np.log(log_series[log_series.columns].shift(1))
 log_series = log_series.dropna()
@@ -58,14 +58,14 @@ for i in range(model.n_components):
     df.columns = time_series.columns
     print(df)
 
-# Adding the state column to the time series dataframes
+# Adding the state column to the time series dataframes.
 states = pd.DataFrame(hidden_states,index=log_series.index)
 log_series = pd.concat([log_series,states],axis=1,sort='False').dropna()
 log_series.rename(columns={0:'state'}, inplace=True)
 time_series = pd.concat([time_series,states],axis=1,sort='False').dropna()
 time_series.rename(columns={0:'state'}, inplace=True)
 
-# Plotting the empirical distribution of log-returns 
+# Plotting the empirical distribution of log-returns.
 # associated with each state.
 for asset in time_series.columns[:-1]:
     for i in range(model.n_components):
