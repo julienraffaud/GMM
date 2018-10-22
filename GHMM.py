@@ -43,7 +43,7 @@ log_series = log_series.dropna()
 # Here I set the number of components to 2, in order
 # to account for normal and high volatility regimes.
 X = log_series[log_series.columns].values
-model = mix.GaussianMixture(n_components=4,
+model = mix.GaussianMixture(n_components=2,
                             covariance_type='full',
                             n_init=100,
                             random_state = 711).fit(X)
