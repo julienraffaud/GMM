@@ -26,7 +26,6 @@ for file in paths:
     df["DATE"] = df["DATE"].astype(datetime) 
     df = df[df[df.columns[1]]!= "."]
     df[df.columns[1]] = df[df.columns[1]].astype(float)
-    #df[df.columns[1]] = np.log(df[df.columns[1]]) - np.log(df[df.columns[1]].shift(1))
     df = df.set_index("DATE")
     dataframes.append(df)
 
@@ -82,7 +81,7 @@ spl.legend([b[0] for b in bars], cv_types)
 
 # Fitting the Gaussian Mixture Model to the data.
 # Here I set the number of components to 4 and covariance type to full,
-# because the marginal BIC score improvement for added components was low
+# because the marginal BIC score improvement for added components is low
 # and I want to avoid overcomplicating the model.
 X = log_series[log_series.columns].values
 model = mix.GaussianMixture(n_components=2,
