@@ -63,7 +63,7 @@ color_iter = itertools.cycle(['navy', 'turquoise', 'cornflowerblue',
 clf = best_
 bars = []
 
-# Plotting the BIC scores
+# Plotting the BIC scores.
 plt.figure(figsize=(8, 6))
 spl = plt.subplot(2, 1, 1)
 for i, (cv_type, color) in enumerate(zip(cv_types, color_iter)):
@@ -80,17 +80,20 @@ plt.text(xpos, bic.min() * 0.97 + .03 * bic.max(), '*', fontsize=14)
 spl.set_xlabel('Number of components')
 spl.legend([b[0] for b in bars], cv_types)
 
-# Fitting the hidden markov model to the data.
-# Here I set the number of components to 4 and covariance type to full, 
-# as these parameters gave the best BIC score.
+# Fitting the Gaussian Mixture Model to the data.
+# Here I set the number of components to 4 and covariance type to full,
+# because the marginal BIC score improvement for added components was low
+# and I want to avoid overcomplicating the model.
 X = log_series[log_series.columns].values
 model = mix.GaussianMixture(n_components=2,
                             covariance_type='full',
                             n_init=100,
                             random_state = 711).fit(X)
+
+#Predicting the hidden states.
 hidden_states = model.predict(X)
 
-# Displaying the parameters of the fitted states.
+# Displaying the parameters of the fitted mixtures.
 print("Mean and variance of each hidden state:")
 for i in range(model.n_components):
     print("{0}th hidden state:".format(i+1))
@@ -99,15 +102,15 @@ for i in range(model.n_components):
     df.columns = time_series.columns
     print(df)
 
-# Adding the state column to the time series dataframes.
+# Adding the predicted hidden states to the time series dataframes.
 states = pd.DataFrame(hidden_states,index=log_series.index)
 log_series = pd.concat([log_series,states],axis=1,sort='False').dropna()
 log_series.rename(columns={0:'state'}, inplace=True)
 time_series = pd.concat([time_series,states],axis=1,sort='False').dropna()
 time_series.rename(columns={0:'state'}, inplace=True)
 
-# Plotting the empirical distribution of log-returns.
-# associated with each state.
+# Plotting the empirical distribution of log-returns
+# associated with each hidden state.
 for asset in time_series.columns[:-1]:
     for i in range(model.n_components):
         mask = log_series.state==i
@@ -116,7 +119,7 @@ for asset in time_series.columns[:-1]:
     plt.xlabel(asset+" log returns")
     plt.show()
     
-# Plotting the time series shaded by state.
+# Plotting the time series using a scatterplot, with observations coloured by hidden state.
 color=cm.rainbow(np.linspace(0,1,model.n_components))
 for asset in time_series.columns[:-3]:
     for i in range(model.n_components):
@@ -127,4 +130,3 @@ for asset in time_series.columns[:-3]:
                    marker=".")
         plt.title(asset+"- State "+str(i+1))
         plt.show()
-
