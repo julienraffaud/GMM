@@ -4,4 +4,4 @@ Analysing regime switches in multivariate time-series using a Gaussian Hidden Ma
 
 The objective is to detect when asset prices' log-returns shift from one probability density to another, with
 each probability density associated with one "regime", or state. Armed with this knowledge one can make better informed decisions about hedging (ex: moving from a low volatility state to a high volatility state would all else equal favour 
-a long vega/gamma position) and portfolio allocation between risky (high volatility) and safe (low vol) assets. 
+a long vega/convexity position) and portfolio allocation between risky (high volatility) and safe (low vol) assets. 
