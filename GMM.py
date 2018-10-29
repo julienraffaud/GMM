@@ -82,7 +82,7 @@ spl.legend([b[0] for b in bars], cv_types)
 # Fitting the Gaussian Mixture Model to the data.
 # Here I set the number of components to 4 and covariance type to full,
 # because the marginal BIC score improvement for added components is low
-# and I want to avoid overcomplicating the model.
+# and we want our result to have a modicum of interpretability.
 X = log_series[log_series.columns].values
 model = mix.GaussianMixture(n_components=2,
                             covariance_type='full',
