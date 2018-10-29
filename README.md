@@ -4,4 +4,4 @@ Starting from a multivariate time series, the objective is to identify a finite 
 
 ### Application to Finance: ### 
 
-Armed with an idea of the PDFs behind a time series, one can make better informed decisions about matters such as hedging (ex: moving from a low volatility state to a high volatility state would all else equal favour a long vega/convexity position), as well as portfolio allocation between risky (high vol) and safe (low vol) assets. 
+Armed with an idea of the PDFs behind a time series, one can make better informed decisions about things like hedging (ex: moving from a low volatility state to a high volatility state would all else equal favour a long vega/convexity position), as well as portfolio allocation between risky (high vol) and safe (low vol) assets.
