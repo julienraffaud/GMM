@@ -1,4 +1,5 @@
-# GMM
+# Gaussian Mixture Model for multivariate time series
+
 Starting from a multivariate time series, the objective is to identify a finite number of Gaussian mixtures from which each observation is realized. Here the parameters of the mixtures are obtained using sklearn's implementation of the Expectation Maximization algorithm (details here: http://scikit-learn.org/stable/modules/mixture.html). 
 
 Application in finance:
