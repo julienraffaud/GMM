@@ -4,7 +4,7 @@ Starting from a multivariate time series, the objective is to identify a finite 
 
 ### Application to Finance: ### 
 
-Armed with a model of the regimes governing a time series, one could make better decisions about things like hedging (ex: moving from a low volatility regime to a high volatility regime would all else equal favour a long vega/convexity position), as well as portfolio allocation between risky (high vol) and safe (low vol) assets.
+Armed with a model of the regimes governing a time series, one could make better decisions about areas such as hedging (ex: moving from a low volatility regime to a high volatility regime would all else equal favour a long vega/convexity position), as well as portfolio allocation between risky (high vol) and safe (low vol) assets.
 
 ### Data: ###
 Here I use daily observations of the USD/JPY exchange rate, the 10Y constant maturity JGB yield, and the Nikkei 225 Index.
