@@ -1,11 +1,12 @@
 # GMM
 
-Starting from a multivariate time series, the objective is to identify a finite number of Gaussian mixtures from which the observations are realized, each one corresponding to a "regime" or market state. Here the parameters of the mixtures are obtained using sklearn's implementation of the Expectation Maximization algorithm (details here: http://scikit-learn.org/stable/modules/mixture.html). 
-
-### Application to Finance: ### 
-
-Equipped with a model of the regimes governing a time series, one could make better decisions in hedging (ex: moving from a low volatility regime to a high volatility regime would all else equal favour a long vega/convexity position), as well as portfolio allocation (between risky/high vol. and safe/low vol. assets).
+The objective is to detect regimes in arbitrarily large multivariate time series by partitioning the time series into segments, with each segment's data consisting of independent samples from a multivariate Gaussian distribution. 
 
 ### Data: ###
-Here I use daily observations of the USD/JPY exchange rate, the 10Y constant maturity JGB yield, and the Nikkei 225 Index.
+Here I use daily log-returns of the USD/JPY exchange rate, the 10Y constant maturity JGB yield, and the Nikkei 225 Index.
 The timespan is 1971 to 2017.
+
+### Academic Reference:
+
+Hallac D., Nystrup P., Boyd S.
+2018. Greedy Gaussian Segmentation of Multivariate Time Series.
