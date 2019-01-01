@@ -1,6 +1,6 @@
 # GMM
 
-The objective is to detect regimes in arbitrarily large multivariate time series by partitioning the time series into segments, with each segment's data consisting of independent samples from a multivariate Gaussian distribution. 
+The objective is to detect regimes in arbitrarily large multivariate time series by "greedily" partitioning the time series into segments, with each segment's data consisting of independent samples from a multivariate Gaussian distribution. 
 
 ### Data: ###
 Here I use daily log-returns of the USD/JPY exchange rate, the 10Y constant maturity JGB yield, and the Nikkei 225 Index.
