@@ -9,4 +9,4 @@ The timespan is 1971 to 2017.
 ### Academic Reference:
 
 Hallac D., Nystrup P., Boyd S.
-2018. Greedy Gaussian Segmentation of Multivariate Time Series.
+2018. Greedy Gaussian Segmentation of Multivariate Time Series. (Arxiv: https://arxiv.org/pdf/1610.07435.pdf).
